@@ -1,0 +1,41 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ex1new
+{
+    public class ComposedMission : IMission
+    {
+        List<culcFunc> list = new List<culcFunc>();
+
+        public ComposedMission(string name)
+        {
+            this.Name = name;
+        }
+
+        public event EventHandler<double> OnCalculate;
+        public String Name { get; }
+        public String Type { get { return "Composed"; } }
+
+        public ComposedMission Add(culcFunc func)
+        {
+            list.Add(func);
+            return this;
+        }
+
+        public double Calculate(double value)
+        {
+            foreach (var culcFunc in list)
+            {
+                if (culcFunc != null)
+                {
+                    value = culcFunc(value);
+                }
+            }
+            OnCalculate?.Invoke(this, value);
+            return value;
+        }
+    }
+}
