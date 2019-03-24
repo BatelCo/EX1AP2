@@ -1,0 +1,33 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ex1new
+{
+    public delegate double culcFunc(double val);
+    public class FunctionsContainer
+    {
+        private Dictionary<string, culcFunc> dic = new Dictionary<string, culcFunc>();
+        public culcFunc this[string culcFuncName]
+        {
+            get
+            {
+                if (!dic.ContainsKey(culcFuncName))
+                {
+                    dic[culcFuncName] = val => val;
+                }
+                return dic[culcFuncName];
+            }
+
+            set { dic[culcFuncName] = value; }
+        }
+
+        public List<string> getAllMissions()
+        {
+            return new List<string>(this.dic.Keys);
+        }
+
+    }
+}
