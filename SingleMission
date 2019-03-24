@@ -1,0 +1,37 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ex1new
+{
+    public class SingleMission : IMission
+    {
+        public culcFunc singel;
+
+        public SingleMission(culcFunc function, string strName)
+        {
+            this.singel = function;
+            this.Name = strName;
+        }
+
+        public event EventHandler<double> OnCalculate;
+
+        public String Name { get; }
+
+        public String Type { get { return "Single"; } }
+
+
+        public double Calculate(double value)
+        {
+            double calc = value;
+            if (singel != null)
+            {
+                calc = singel(value);
+            }
+            OnCalculate?.Invoke(this, calc);
+            return calc;
+        }
+    }
+}
